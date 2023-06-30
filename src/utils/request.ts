@@ -1,3 +1,7 @@
 import axios from 'axios'
 
-export default axios
+const instance = axios.create({
+  baseURL: 'https://api.tvmaze.com/'
+})
+
+export default instance

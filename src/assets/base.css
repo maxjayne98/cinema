@@ -1,24 +1,41 @@
 /* color palette from <https://github.com/vuejs/theme> */
 :root {
-  --vt-c-white: #ffffff;
-  --vt-c-white-soft: #f8f8f8;
-  --vt-c-white-mute: #f2f2f2;
+  background-color: var(--background-secondary-lighter);
+  --selection: rgba(214, 221, 247, 0.192) !important;
+  --background-primary: #0e121a !important;
+  --background-primary-trans: rgba(14, 18, 26, 0.5) !important;
+  --background-secondary: #090b10 !important;
+  --background-secondary-number: 9, 11, 16 !important;
+  --background-secondary-lighter: #0f111a !important;
+  --background-secondary-lighter-number: 15, 17, 26 !important;
+  --theme-primary: #5ac5ba !important;
+  --theme-primary-hover: #78e3d8 !important;
+  --theme-middle: #5a65c5;
+  --theme-secondary: #f65164 !important;
+  --theme-secondary-hover: #fa3e54 !important;
+  --font-color-secondary: #6f7790 !important;
+  --line: #1d1e1f !important;
+  --line-active: #1d1e1f !important;
+  --btn-window-hover: #222428 !important;
+  --window-dragbar: #0e121a !important;
+  --btn-window-close-hover: #d51324 !important;
+  --boxshadow-primary: 2px 4px 3px #0a090c !important;
+  --boxshadow-secondary: 2px 2px 2px #0a090c !important;
+  --shadow-color: #0a090c !important;
+  --scrollbar-back: #1e2124 !important;
+  --scrollbar-front-number: 45, 48, 51;
+  --scrollbar-front: #2d3033 !important;
+  --frame-skeleton: #11141b !important;
+  --switch-border: #474c5c !important;
+  --theme-type-color-number: 0, 0, 0;
 
-  --vt-c-black: #181818;
-  --vt-c-black-soft: #222222;
-  --vt-c-black-mute: #282828;
-
-  --vt-c-indigo: #2c3e50;
-
-  --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
-  --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);
-  --vt-c-divider-dark-1: rgba(84, 84, 84, 0.65);
-  --vt-c-divider-dark-2: rgba(84, 84, 84, 0.48);
-
-  --vt-c-text-light-1: var(--vt-c-indigo);
-  --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
-  --vt-c-text-dark-1: var(--vt-c-white);
-  --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
+  --font-color-primary: #f0f0f0 !important;
+  --font-color-themematch: #f0f0f0 !important;
+  --loader-skeleton: hsla(0, 0%, 90.2%, 0.5) !important;
+  --switch-back: #1e1f22 !important;
+  --switch-thumb: #fff !important;
+  --rating-color: #ffe600 !important;
+  --tweeter-border-color: #15202b;
 }
 
 /* semantic color variables for this project */
@@ -60,8 +77,8 @@
 
 body {
   min-height: 100vh;
+  background-color: var(--background-primary);
   color: var(--color-text);
-  background: var(--color-background);
   transition: color 0.5s, background-color 0.5s;
   line-height: 1.6;
   font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
