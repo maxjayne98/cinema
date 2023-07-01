@@ -1,9 +1,9 @@
 <template>
   <div>
     <Banners />
-    <div class="page">
+    <PageContainer>
       <section class="section">
-        <div class="page__container">
+        <div>
           <ShowsSlider v-for="(value, key) in topGenresShows" :title="key">
             <SwiperSlide v-for="show in value.slice(0, 10)" :key="show.id">
               <MovieCard :show="show" />
@@ -11,7 +11,7 @@
           </ShowsSlider>
         </div>
       </section>
-    </div>
+    </PageContainer>
   </div>
 </template>
 
@@ -20,6 +20,7 @@ import { onMounted, ref, computed } from 'vue'
 import { SwiperSlide } from 'swiper/vue'
 import MovieCard from '@/components/Common/MovieCard.vue'
 import ShowsSlider from '@/components/Common/ShowsSlider.vue'
+import PageContainer from '@/components/Common/PageContainer.vue'
 import Banners from '@/components/Pages/Home/Banners.vue'
 import { getShowsByPage } from '@/services/shows'
 import { Show } from '@/models/types'
@@ -68,10 +69,6 @@ onMounted(() => fetchShows())
 </script>
 
 <style scoped>
-.page {
-  max-width: 160rem;
-  margin: 0 auto;
-}
 .container {
   display: flex;
   flex-wrap: wrap;

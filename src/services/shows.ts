@@ -12,3 +12,7 @@ export async function getShowInfo(id: number) {
 export async function getShowImages(id: number) {
   return request.get(`/shows/${id}/images`)
 }
+
+export async function getShowsByQuery(q: string) {
+  return request.get('/search/shows', { params: { q } })
+}

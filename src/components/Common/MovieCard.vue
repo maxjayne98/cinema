@@ -7,13 +7,13 @@
       @mouseover="mouseEnter"
     >
       <div class="card__covers-container">
-        <img :src="show.image.medium" class="cover card__cover--main" />
+        <img :src="show.image?.medium || show.image?.original" class="cover card__cover--main" />
         <img
-          :src="show.image.medium"
+          :src="show.image?.medium || show.image?.original"
           :class="['cover card__cover--second', { 'card--is-hovered': isHovered }]"
         />
         <img
-          :src="show.image.medium"
+          :src="show.image?.medium || show.image?.original"
           :class="['cover card__cover--third', { 'card--is-hovered': isHovered }]"
         />
         <transition name="fade">
@@ -33,7 +33,7 @@
 
     <div class="card__badge card__badge--bottom">
       <IMDBIcon class="card__badge__icon" />
-      {{ show.rating.average || '-' }}
+      {{ show.rating?.average || '-' }}
     </div>
   </div>
 </template>
