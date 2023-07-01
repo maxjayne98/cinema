@@ -10,9 +10,8 @@
 </template>
 
 <script setup lang="ts">
-import { Show } from '@/models/types.ts'
 defineProps<{
-  toppicks: Array<Show>
+  bannersUrl?: Array<string>
 }>()
 </script>
 

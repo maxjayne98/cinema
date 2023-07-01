@@ -30,7 +30,7 @@ import Guard from '@/components/Common/FetchGuard.vue'
 import type { Show } from '@/models/types'
 
 import { getShowsByQuery } from '@/services/shows'
-const shows = ref<Array<Show>>([])
+const shows = ref<Array<{ score: number; show: Show }>>([])
 
 async function searchShows() {
   try {

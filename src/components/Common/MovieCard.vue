@@ -42,7 +42,7 @@
 import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import { extractTextFromHtmlNode } from '@/utils/helpers'
-import { Show } from '@/models/types'
+import type { Show } from '@/models/types'
 import IMDBIcon from '@/components/Icons/IMDBIcon.vue'
 
 interface Props {

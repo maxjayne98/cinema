@@ -5,8 +5,8 @@
     </div>
     <ul class="show-details__producer-info">
       <li class="show-details__producer-site">
-        <a :href="show?.network.officialSite">
-          {{ show?.network.name }}
+        <a :href="show?.network?.officialSite">
+          {{ show?.network?.name }}
         </a>
       </li>
       <li class="show-details__time">{{ show?.runtime }}m</li>

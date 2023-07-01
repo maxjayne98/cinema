@@ -1,4 +1,4 @@
-import { Image } from '@/models/types'
+import type { Image } from '@/models/types'
 
 export function extractTextFromHtmlNode(summary: string) {
   const node = document.createElement('span')

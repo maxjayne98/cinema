@@ -66,7 +66,7 @@ export interface Image {
   resolutions: Record<ResolutionName, Resolution>
 }
 
-export type ResolutionName = 'orginal' | 'medium'
+export type ResolutionName = 'original' | 'medium'
 export interface Resolution {
   url: string
   width: number

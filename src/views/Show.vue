@@ -24,35 +24,34 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { getShowInfo, getShowImages } from '@/services/shows'
 import ShowDetails from '@/components/Pages/Show/ShowDetails.vue'
 
 import { findResolution } from '@/utils/helpers'
-import type { Show, Resolution } from '@/models/types'
+import type { Show, Image } from '@/models/types'
 
 const {
   params: { id }
 } = useRoute()
 
-const info = ref<Show>(null)
-const bg = ref<Resolution>(null)
+const info = ref<Show | null>(null)
+const bg = ref<Image | null>(null)
 
 onMounted(() => fetchShowInfo())
-watch(info, () => {
-  console.log('jjj  ___   ', info.value)
-})
+
 async function fetchShowInfo() {
   if (id) {
     try {
-      const { data: showInfo } = await getShowInfo(id)
-      const { data: images } = await getShowImages(id)
+      const { data: showInfo } = await getShowInfo(Number(id))
+      const { data: images } = await getShowImages(Number(id))
       info.value = showInfo
       console.log('🚀 ~ file: Show.vue:206 ~ fetchShowInfo ~ info:', info)
-      bg.value =
+      const img =
         findResolution(images, { height: 1080, width: 1920 }) ||
         findResolution(images, { width: 1280, height: 720 })
+      if (img) bg.value = img
     } catch (error) {
       console.log('🚀 ~ file: Show.vue:24 ~ fetchShowInfo ~ error:', error)
     }

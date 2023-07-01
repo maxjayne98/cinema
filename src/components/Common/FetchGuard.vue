@@ -5,7 +5,7 @@
         <p>
           {{ error }}
         </p>
-        <button @click="retry" class="guard__retry">retry</button>
+        <button v-if="retry" class="guard__retry" @click="retry">retry</button>
       </div>
     </slot>
     <slot v-else-if="isLoading" name="loading">
@@ -25,7 +25,8 @@ withDefaults(
   }>(),
   {
     error: undefined,
-    isLoading: false
+    isLoading: false,
+    retry: undefined
   }
 )
 </script>

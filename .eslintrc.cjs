@@ -1,25 +1,30 @@
-/* eslint-env node */
-require('@rushstack/eslint-patch/modern-module-resolution')
-
 module.exports = {
+  env: {
+    browser: true,
+    node: true,
+    es2021: true
+  },
   root: true,
-  'extends': [
-    'plugin:vue/vue3-essential',
-    'eslint:recommended',
-    '@vue/eslint-config-typescript',
-    '@vue/eslint-config-prettier/skip-formatting'
-  ],
-  overrides: [
-    {
-      files: [
-        'cypress/e2e/**/*.{cy,spec}.{js,ts,jsx,tsx}'
-      ],
-      'extends': [
-        'plugin:cypress/recommended'
-      ]
-    }
-  ],
+  plugins: ['@typescript-eslint'],
+  parser: 'vue-eslint-parser',
   parserOptions: {
-    ecmaVersion: 'latest'
+    parser: '@typescript-eslint/parser'
+  },
+  extends: [
+    'eslint:recommended',
+    'plugin:vue/vue3-recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:prettier/recommended',
+    'plugin:cypress/recommended',
+    'plugin:prettier/recommended'
+  ],
+  rules: {
+    'vue/multi-word-component-names': 'off',
+    '@typescript-eslint/no-empty-function': 'off',
+    'cypress/no-unnecessary-waiting': 'warn',
+    'cypress/unsafe-to-chain-command': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '_' }],
+    '@typescript-eslint/ban-ts-comment': ['error', { 'ts-ignore': 'allow-with-description' }]
   }
 }

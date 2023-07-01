@@ -5,8 +5,8 @@
       <slot name="titleIcon" />
     </p>
     <swiper
-      :grabCursor="true"
-      :slidesPerView="'auto'"
+      :grab-cursor="true"
+      :slides-per-view="'auto'"
       :navigation="true"
       :pagination="true"
       :modules="modules"

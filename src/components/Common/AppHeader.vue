@@ -7,7 +7,7 @@
       <div v-if="route.name !== 'search'" class="header__input-container">
         <MagnifyingGlassIcon class="header__input__icon" @click="searchButtonOnClick" />
         <transition name="slide-left-in">
-          <input v-if="isSearchInputVisible" class="header__input" v-model="query" />
+          <input v-if="isSearchInputVisible" v-model="query" class="header__input" />
         </transition>
       </div>
     </transition>
@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { useRoute, useRouter, RouterLink } from 'vue-router'
 import CinemaLogo from '@/components/Icons/CinemaIcon.vue'
 import { MagnifyingGlassIcon } from '@heroicons/vue/24/solid'
@@ -23,7 +23,6 @@ import { MagnifyingGlassIcon } from '@heroicons/vue/24/solid'
 const isTop = ref(window.scrollY === 0)
 const route = useRoute()
 const router = useRouter()
-const isInSearchPage = computed(() => route.name === 'search')
 const isSearchInputVisible = ref(false)
 const query = ref('')
 
