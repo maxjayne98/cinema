@@ -1,46 +1,65 @@
 <template>
   <div class="input-container">
+    <button class="input__button">
+      <MagnifyingGlassIcon class="input__button__icon" />
+    </button>
     <input class="input" />
-    <button class="input__button"></button>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { MagnifyingGlassIcon } from '@heroicons/vue/24/solid'
+</script>
 
 <style lang="scss" scoped>
 .input {
   background: transparent;
   width: 100%;
   height: 100%;
-  margin-left: 5.5rem;
+  margin-left: 0.6rem;
   font-size: 1.8rem;
   color: var(--font-color-secondary);
 
   &-container {
-    border-radius: 3rem;
+    border-radius: 4rem;
     width: 80vw;
     min-width: 35rem;
     max-width: 105rem;
     background-color: var(--background-secondary);
-    padding: 1rem;
+    padding: 0.5rem;
     overflow: hidden;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 6rem;
     box-shadow: var(--shadow);
   }
 
   &__button {
-    width: 5rem;
-    height: 5rem;
+    min-width: 5rem;
+    min-height: 5rem;
     background-color: var(--theme-primary);
-    position: absolute;
-    left: 0.6rem;
-    top: 50%;
-    transform: translateY(-50%);
     border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    transition: all 0.2s;
+    transform-origin: center;
+    align-items: center;
 
     &:hover {
       background-color: var(--theme-primary-hover);
+    }
+
+    &:active {
+      transform: translateY(0.1rem);
+    }
+
+    &__icon {
+      width: 3.2rem;
+      height: 3.2rem;
+      color: var(--font-color-secondary);
+      transition: all 0.5s;
     }
   }
 }

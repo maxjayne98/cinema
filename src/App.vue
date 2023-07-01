@@ -37,7 +37,7 @@ import AppHeader from '@/components/Common/AppHeader.vue'
 .fade-leave-active {
   transition: opacity 0.5s ease-out;
 }
-.fade-enter,
+.fade-enter-from,
 .fade-leave-to {
   opacity: 0;
 }

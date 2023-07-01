@@ -1,13 +1,31 @@
 <template>
   <header :class="['header', { 'header--is-top': isTop }]">
-    <CinemaLogo class="header__logo" />
+    <RouterLink :to="{ name: 'home' }">
+      <CinemaLogo class="header__logo" />
+    </RouterLink>
+    <transition name="slide-left-in">
+      <div v-if="route.name !== 'search'" class="header__input-container">
+        <MagnifyingGlassIcon class="header__input__icon" @click="searchButtonOnClick" />
+        <transition name="slide-left-in">
+          <input v-if="isSearchInputVisible" class="header__input" v-model="query" />
+        </transition>
+      </div>
+    </transition>
   </header>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { useRoute, useRouter, RouterLink } from 'vue-router'
 import CinemaLogo from '@/components/Icons/CinemaIcon.vue'
+import { MagnifyingGlassIcon } from '@heroicons/vue/24/solid'
+
 const isTop = ref(window.scrollY === 0)
+const route = useRoute()
+const router = useRouter()
+const isInSearchPage = computed(() => route.name === 'search')
+const isSearchInputVisible = ref(false)
+const query = ref('')
 
 window.addEventListener('scroll', function () {
   if (window.scrollY == 0) {
@@ -16,11 +34,21 @@ window.addEventListener('scroll', function () {
     isTop.value = false
   }
 })
+
+function searchButtonOnClick() {
+  if (isSearchInputVisible.value && query.value) {
+    router.push({ name: 'search', query: { q: query.value } })
+    query.value = ''
+  }
+  isSearchInputVisible.value = !isSearchInputVisible.value
+}
 </script>
 
 <style lang="scss" scoped>
 .header {
   position: fixed;
+  display: flex;
+  align-items: center;
   top: 0;
   width: 100%;
   z-index: 1000;
@@ -83,6 +111,7 @@ window.addEventListener('scroll', function () {
     width: 13rem;
     height: auto;
     filter: drop-shadow(0 1px 2px rgb(0 0 0 / 0.1)) drop-shadow(0 1px 1px rgb(0 0 0 / 0.06));
+    margin-right: 3.2rem;
   }
 
   &--is-top {
@@ -94,5 +123,39 @@ window.addEventListener('scroll', function () {
       opacity: 1;
     }
   }
+  &__input {
+    height: 3.6rem;
+    padding: 0.4rem 0.8rem 0.4rem 3.2rem;
+    border: 1px solid var(--font-color-primary);
+    color: var(--font-color-primary);
+    border-radius: 0.8rem;
+    background-color: transparent;
+    position: absolute;
+    left: -0.4rem;
+    &-container {
+      display: flex;
+      align-items: center;
+      position: relative;
+      margin-left: 0.4rem;
+    }
+    &__icon {
+      width: 2.4rem;
+      height: 2.4rem;
+      color: var(--font-color-primary);
+      cursor: pointer;
+      z-index: 1;
+    }
+  }
+}
+
+.slide-left-in-leave-active,
+.slide-left-in-enter-active {
+  transition: 0.2s;
+}
+
+.slide-left-in-enter-from,
+.slide-left-in-leave-to {
+  transform: translate(-2rem, 0);
+  opacity: 0;
 }
 </style>
