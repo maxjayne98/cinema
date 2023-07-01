@@ -8,11 +8,13 @@
     </section>
     <section>
       <PageContainer>
-        <div class="search__list">
-          <div v-for="{ show } in shows" :key="show.id" class="search__list-item">
-            <MovieCard :show="show" />
+        <Guard>
+          <div class="search__list">
+            <div v-for="{ show } in shows" :key="show.id" class="search__list-item">
+              <MovieCard :show="show" />
+            </div>
           </div>
-        </div>
+        </Guard>
       </PageContainer>
     </section>
   </div>
@@ -24,6 +26,7 @@ import Banners from '@/components/Pages/Home/Banners.vue'
 import SearchInput from '@/components/Pages/Search/SearchInput.vue'
 import PageContainer from '@/components/Common/PageContainer.vue'
 import MovieCard from '@/components/Common/MovieCard.vue'
+import Guard from '@/components/Common/FetchGuard.vue'
 import type { Show } from '@/models/types'
 
 import { getShowsByQuery } from '@/services/shows'
