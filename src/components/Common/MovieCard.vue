@@ -1,6 +1,48 @@
+<template>
+  <div class="card__container">
+    <div class="card__badge card__badge--top">{{ show.name }}</div>
+    <RouterLink
+      :to="{ name: 'shows-id', params: { id: show.id } }"
+      class="card__covers"
+      @mouseover="mouseEnter"
+    >
+      <div class="card__covers-container">
+        <img :src="show.image.medium" class="cover card__cover--main" />
+        <img
+          :src="show.image.medium"
+          :class="['cover card__cover--second', { 'card--is-hovered': isHovered }]"
+        />
+        <img
+          :src="show.image.medium"
+          :class="['cover card__cover--third', { 'card--is-hovered': isHovered }]"
+        />
+        <transition name="fade">
+          <div v-if="isHovered" class="card__info" @mouseover="mouseEnter" @mouseleave="mouseLeave">
+            <p class="card__info-text">
+              {{ extractTextFromHtmlNode(show.summary) }}
+            </p>
+            <ul class="card-info__genres">
+              <li v-for="genre in show.genres.slice(0, 3)" :key="genre" class="card-info__genre">
+                {{ genre }}
+              </li>
+            </ul>
+          </div>
+        </transition>
+      </div>
+    </RouterLink>
+
+    <div class="card__badge card__badge--bottom">
+      {{ show.rating.average || '-' }}
+    </div>
+  </div>
+</template>
+
 <script setup lang="ts">
-import { Show } from '@/models/types'
 import { ref } from 'vue'
+import { RouterLink } from 'vue-router'
+import { extractTextFromHtmlNode } from '@/utils/helpers'
+import { Show } from '@/models/types'
+
 interface Props {
   show: Show
 }
@@ -16,46 +58,8 @@ function mouseEnter() {
 function mouseLeave() {
   if (isHovered.value) isHovered.value = false
 }
-function extractSummary(summary: string) {
-  var span = document.createElement('span')
-  span.innerHTML = summary
-  return span.textContent || span.innerText
-}
 </script>
 
-<template>
-  <div class="card__container">
-    <div class="card__badge card__badge--top">{{ show.name }}</div>
-    <div class="card__covers-container">
-      <div class="card__covers" @mouseover="mouseEnter">
-        <img :src="show.image.medium" class="cover card__cover--main" />
-        <img
-          :src="show.image.medium"
-          :class="['cover card__cover--second', { 'card--is-hovered': isHovered }]"
-        />
-        <img
-          :src="show.image.medium"
-          :class="['cover card__cover--third', { 'card--is-hovered': isHovered }]"
-        />
-      </div>
-      <transition name="fade">
-        <div v-if="isHovered" class="card__info" @mouseover="mouseEnter" @mouseleave="mouseLeave">
-          <p class="card__info-text">
-            {{ extractSummary(show.summary) }}
-          </p>
-          <ul class="card-info__genres">
-            <li v-for="genre in show.genres.slice(0, 3)" :key="genre" class="card-info__genre">
-              {{ genre }}
-            </li>
-          </ul>
-        </div>
-      </transition>
-    </div>
-    <div class="card__badge card__badge--bottom">
-      {{ show.rating.average || '-' }}
-    </div>
-  </div>
-</template>
 <style lang="scss" scoped>
 .card__badge {
   background-color: black;

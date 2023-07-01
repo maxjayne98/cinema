@@ -60,8 +60,17 @@ export interface Externals {
 }
 
 export interface Image {
-  medium: string
-  original: string
+  id: number
+  type: string
+  main: boolean
+  resolutions: Record<ResolutionName, Resolution>
+}
+
+export type ResolutionName = 'orginal' | 'medium'
+export interface Resolution {
+  url: string
+  width: number
+  height: number
 }
 
 export interface Links {
