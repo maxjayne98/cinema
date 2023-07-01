@@ -1,20 +1,22 @@
 <template>
   <div>
     <Banners />
-    <section class="section">
-      <div class="page__container">
-        <ShowsSlider title="Drama">
-          <SwiperSlide v-for="show in shows.slice(0, 10)" :key="show.id">
-            <MovieCard :show="show" />
-          </SwiperSlide>
-        </ShowsSlider>
-      </div>
-    </section>
+    <div class="page">
+      <section class="section">
+        <div class="page__container">
+          <ShowsSlider v-for="(value, key) in topGenresShows" :title="key">
+            <SwiperSlide v-for="show in value.slice(0, 10)" :key="show.id">
+              <MovieCard :show="show" />
+            </SwiperSlide>
+          </ShowsSlider>
+        </div>
+      </section>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import { SwiperSlide } from 'swiper/vue'
 import MovieCard from '@/components/Common/MovieCard.vue'
 import ShowsSlider from '@/components/Common/ShowsSlider.vue'
@@ -22,7 +24,34 @@ import Banners from '@/components/Pages/Home/Banners.vue'
 import { getShowsByPage } from '@/services/shows'
 import { Show } from '@/models/types'
 
+const TOP_GENRE_SIZE = 10
 const shows = ref<Array<Show>>([])
+
+const categorizedShows = computed(() => {
+  return shows.value?.reduce((acc, current) => {
+    const genre = getShowGenreIndex(current)
+    if (!genre) return acc
+
+    return acc[genre]
+      ? { ...acc, [genre]: [current, ...acc[genre]] }
+      : {
+          ...acc,
+          [genre]: [current]
+        }
+  }, {})
+})
+
+const topGenresShows = computed(() => {
+  return Object.entries(categorizedShows.value).reduce((acc, current) => {
+    if (current[1].length > TOP_GENRE_SIZE) return { ...acc, [current[0]]: current[1] }
+    return acc
+  }, {})
+})
+
+function getShowGenreIndex(show: Show) {
+  return show['genres'][0]
+}
+
 async function fetchShows() {
   try {
     const { data } = await getShowsByPage(1)
@@ -33,12 +62,14 @@ async function fetchShows() {
   }
 }
 
+function categorizeShows() {}
+
 onMounted(() => fetchShows())
 </script>
 
-<style>
+<style scoped>
 .page {
-  /* max-width: 100rem; */
+  max-width: 160rem;
   margin: 0 auto;
 }
 .container {

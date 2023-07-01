@@ -15,7 +15,7 @@ import { RouterLink, RouterView } from 'vue-router'
 <style scoped>
 .page {
   display: flex;
-  /* min-height: 100vh; */
+  min-height: 100vh;
   flex-direction: column;
 }
 .main {

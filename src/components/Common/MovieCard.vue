@@ -32,6 +32,7 @@
     </RouterLink>
 
     <div class="card__badge card__badge--bottom">
+      <IMDBIcon class="card__badge__icon" />
       {{ show.rating.average || '-' }}
     </div>
   </div>
@@ -42,6 +43,7 @@ import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import { extractTextFromHtmlNode } from '@/utils/helpers'
 import { Show } from '@/models/types'
+import IMDBIcon from '@/components/Icons/IMDBIcon.vue'
 
 interface Props {
   show: Show
@@ -75,13 +77,17 @@ function mouseLeave() {
 }
 
 .card__badge--bottom {
+  display: flex;
+  align-items: center;
   border-bottom-left-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;
   z-index: 5;
+  padding: 0.4rem 0.8rem;
+  font-size: 1.2rem;
 }
 
 .cover {
-  height: 16rem;
+  height: 20rem;
   width: 100%;
   box-shadow: 0 0 1.8rem -0.4rem #0a090c !important;
   border-radius: 0.5rem;
@@ -93,7 +99,12 @@ function mouseLeave() {
   align-items: end;
   font-size: 0.875rem;
 }
-
+.card__badge__icon {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  margin-right: 0.4rem;
+}
 .card__cover--main {
   z-index: 3;
   position: relative;
@@ -122,7 +133,7 @@ function mouseLeave() {
 
 .card__container {
   padding: 1rem;
-  width: 15rem;
+  width: 18rem;
   display: flex;
   flex-direction: column;
   justify-content: end;
@@ -182,5 +193,20 @@ function mouseLeave() {
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
+}
+
+@media screen and (max-width: 992px) {
+  .card__container {
+    width: 14rem;
+  }
+  .cover {
+    height: 17rem;
+  }
+  .card__badge--top {
+    font-size: 1.2rem;
+  }
+  .card__badge--bottom {
+    font-size: 1rem;
+  }
 }
 </style>

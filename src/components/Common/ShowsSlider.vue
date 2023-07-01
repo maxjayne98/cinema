@@ -20,8 +20,8 @@
           spaceBetween: 20
         },
         '1400': {
-          slidesPerView: 5,
-          spaceBetween: 50
+          slidesPerView: 6,
+          spaceBetween: 30
         }
       }"
       class="mySwiper"
@@ -60,7 +60,7 @@ defineProps<Props>()
 <style>
 .swiper {
   width: 100%;
-  height: 22rem;
+  height: 26rem;
 }
 .swiper-slide {
   display: flex;
