@@ -64,16 +64,17 @@ function mouseLeave() {
 
 <style lang="scss" scoped>
 .card__badge {
-  background-color: black;
+  background-color: var(--scrollbar-front);
   color: white;
   margin: 0 0.5rem;
   text-align: center;
-  padding: 0.125rem;
+  padding: 0.25rem;
 }
 
 .card__badge--top {
   border-top-left-radius: 0.5rem;
   border-top-right-radius: 0.5rem;
+  font-weight: 600;
 }
 
 .card__badge--bottom {
@@ -89,7 +90,7 @@ function mouseLeave() {
 .cover {
   height: 20rem;
   width: 100%;
-  box-shadow: 0 0 1.8rem -0.4rem #0a090c !important;
+  box-shadow: var(--shadow);
   border-radius: 0.5rem;
 }
 

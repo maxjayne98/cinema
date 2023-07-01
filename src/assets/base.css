@@ -36,6 +36,7 @@
   --switch-thumb: #fff !important;
   --rating-color: #ffe600 !important;
   --tweeter-border-color: #15202b;
+  --shadow: 0 0 1.8rem -0.4rem #0a090c !important;
 }
 
 /* semantic color variables for this project */

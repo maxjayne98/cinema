@@ -26,6 +26,7 @@
     overflow: hidden;
     position: relative;
     height: 6rem;
+    box-shadow: var(--shadow);
   }
 
   &__button {

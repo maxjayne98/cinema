@@ -6,6 +6,6 @@
 
 <style lang="scss" scoped>
 .not-found {
-  color: text-white;
+  color: white;
 }
 </style>
