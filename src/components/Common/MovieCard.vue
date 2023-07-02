@@ -38,8 +38,11 @@
     </RouterLink>
 
     <div class="card__badge card__badge--bottom">
-      <IMDBIcon class="card__badge__icon" />
+      <div>
+        <IMDBIcon class="card__badge__icon" />
+      </div>
       {{ show.rating?.average || '-' }}
+      <FavoriteMovieIcon :show="show" />
     </div>
   </div>
 </template>
@@ -50,6 +53,7 @@ import { RouterLink } from 'vue-router'
 import { extractTextFromHtmlNode } from '@/utils/helpers'
 import type { Show } from '@/models/types'
 import IMDBIcon from '@/components/Icons/IMDBIcon.vue'
+import FavoriteMovieIcon from '@/components/Common/FavoriteMovieIcon.vue'
 
 interface Props {
   show: Show
@@ -86,6 +90,7 @@ function mouseLeave() {
 .card__badge--bottom {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   border-bottom-left-radius: 0.5rem;
   border-bottom-right-radius: 0.5rem;
   z-index: 5;
@@ -184,9 +189,11 @@ function mouseLeave() {
 
 .card-info__genres {
   display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
   list-style-type: disc;
-  font-size: 0.725rem;
-  margin: 0rem 0.5rem 2rem;
+  font-size: 1rem;
+  margin: 0rem 0.5rem;
 }
 
 .card-info__genre {

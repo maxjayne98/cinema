@@ -2,6 +2,7 @@
   <div class="show-details">
     <div class="">
       <h2 class="show-details__title">{{ show?.name }} {{ show?.premiered.split('-')[0] }}</h2>
+      <FavoriteMovieIcon :show="show" />
     </div>
     <ul class="show-details__producer-info">
       <li class="show-details__producer-site">
@@ -61,6 +62,8 @@ import Badge from '@/components/Base/Badge.vue'
 import IMDBIcon from '@/components/Icons/IMDBIcon.vue'
 import { extractTextFromHtmlNode } from '@/utils/helpers'
 import type { Show } from '@/models/types'
+import FavoriteMovieIcon from '@/components/Common/FavoriteMovieIcon.vue'
+
 defineProps<{
   show: Show
 }>()
