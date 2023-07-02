@@ -17,6 +17,9 @@
     </Banners>
     <PageContainer>
       <section class="section">
+        <div class="go-down">
+          <ScrollDown />
+        </div>
         <div>
           <FetchGuard :is-loading="!shows.length" :error="error">
             <ShowsSlider v-for="(value, key) in topGenresShows" :key="key" :title="key">
@@ -40,6 +43,7 @@ import ShowsSlider from '@/components/Common/ShowsSlider.vue'
 import PageContainer from '@/components/Common/PageContainer.vue'
 import Banners from '@/components/Common/Banners.vue'
 import FetchGuard from '@/components/Common/FetchGuard.vue'
+import ScrollDown from '@/components/Pages/Home/ScrollDown.vue'
 import { getShowsByPage } from '@/services/shows'
 import type { Show } from '@/models/types'
 import { extractTextFromHtmlNode } from '@/utils/helpers'
@@ -108,6 +112,10 @@ onMounted(() => fetchShows())
   display: flex;
   flex-wrap: wrap;
 }
+
+.section {
+  position: relative;
+}
 .slider-container {
   width: 100%;
 }
@@ -120,6 +128,13 @@ onMounted(() => fetchShows())
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+.go-down {
+  top: -10rem;
+  left: 50%;
+  transform: translate(-50%, 0);
+  position: absolute;
+  z-index: 500;
 }
 .banner__details {
   position: absolute;
