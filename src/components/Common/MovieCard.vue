@@ -40,8 +40,8 @@
     <div class="card__badge card__badge--bottom">
       <div>
         <IMDBIcon class="card__badge__icon" />
+        {{ show.rating?.average || '-' }}
       </div>
-      {{ show.rating?.average || '-' }}
       <FavoriteMovieIcon :show="show" />
     </div>
   </div>
@@ -116,6 +116,7 @@ function mouseLeave() {
   height: 2rem;
   border-radius: 50%;
   margin-right: 0.4rem;
+  display: inline;
 }
 .card__cover--main {
   z-index: 3;

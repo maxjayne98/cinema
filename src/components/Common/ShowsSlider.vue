@@ -60,7 +60,7 @@ defineProps<Props>()
 }
 .my_swiper {
   width: 100%;
-  height: 26rem;
+  height: 32rem;
 }
 </style>
 <style>
@@ -68,6 +68,16 @@ defineProps<Props>()
   display: flex;
   width: auto;
 }
+.swiper-button-next.swiper-button-disabled,
+.swiper-button-prev.swiper-button-disabled {
+  opacity: 0;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: var(--theme-primary);
+}
+
 @media screen and (min-width: 768px) {
   .swiper-slide {
     justify-content: center;
