@@ -1,7 +1,7 @@
 <template>
   <div class="show">
-    <section class="main-top">
-      <Guard :error="error">
+    <Guard :error="error">
+      <section class="main-top">
         <article id="single-30nama" class="main-article">
           <!---->
           <section class="background">
@@ -25,8 +25,8 @@
             </figcaption>
           </figure>
         </article>
-      </Guard>
-    </section>
+      </section>
+    </Guard>
   </div>
 </template>
 
