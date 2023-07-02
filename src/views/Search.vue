@@ -3,17 +3,21 @@
     <section class="search__first-section">
       <Banners />
       <div class="search__input-container">
-        <SearchInput />
+        <SearchInput :submit="searchShows" :default-query="(query as string)" />
       </div>
     </section>
     <section>
       <PageContainer>
-        <FetchGuard :is-loading="!shows.length" :error="error">
-          <div class="search__list">
-            <div v-for="{ show } in shows" :key="show.id" class="search__list-item">
-              <MovieCard :show="show" />
+        <FetchGuard :is-loading="isLoading" :error="error">
+          <template v-if="Array.isArray(shows)">
+            <div v-if="shows?.length" class="search__list">
+              <div v-for="{ show } in shows" :key="show.id" class="search__list-item">
+                <MovieCard :show="show" />
+              </div>
             </div>
-          </div>
+            <NoData v-else message="No result with your query." />
+          </template>
+          <NoData v-else message="Please search." />
         </FetchGuard>
       </PageContainer>
     </section>
@@ -22,20 +26,27 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+import { useRoute } from 'vue-router'
 import Banners from '@/components/Pages/Home/Banners.vue'
 import SearchInput from '@/components/Pages/Search/SearchInput.vue'
 import PageContainer from '@/components/Common/PageContainer.vue'
 import MovieCard from '@/components/Common/MovieCard.vue'
 import FetchGuard from '@/components/Common/FetchGuard.vue'
+import NoData from '@/components/Common/NoData.vue'
+import { getShowsByQuery } from '@/services/shows'
 import type { Show } from '@/models/types'
 
-import { getShowsByQuery } from '@/services/shows'
-const shows = ref<Array<{ score: number; show: Show }>>([])
-const error = ref<string | null>('')
+const route = useRoute()
 
-async function searchShows() {
+const shows = ref<Array<{ score: number; show: Show }> | null>(null)
+const error = ref<string>('')
+const isLoading = ref(false)
+const query = ref(route.query.q || '')
+
+async function searchShows(query: string) {
+  isLoading.value = true
   try {
-    const { data } = await getShowsByQuery('man')
+    const { data } = await getShowsByQuery(query)
     shows.value = data
   } catch (err: any) {
     if ('response' in err) {
@@ -45,10 +56,12 @@ async function searchShows() {
         error.value = err.message
       }
     }
+  } finally {
+    isLoading.value = false
   }
 }
 
-onMounted(() => searchShows())
+onMounted(() => query.value && searchShows(query.value as string))
 </script>
 
 <style lang="scss" scoped>

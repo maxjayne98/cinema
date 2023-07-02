@@ -1,14 +1,30 @@
 <template>
-  <div class="input-container">
-    <button class="input__button">
-      <MagnifyingGlassIcon class="input__button__icon" />
-    </button>
-    <input class="input" />
+  <div>
+    <form class="input-container" @submit="formSubmit">
+      <button class="input__button" type="submit">
+        <MagnifyingGlassIcon class="input__button__icon" />
+      </button>
+      <input v-model="query" class="input" />
+    </form>
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { MagnifyingGlassIcon } from '@heroicons/vue/24/solid'
+import { ref } from 'vue'
+
+const props = defineProps<{
+  submit: (query: string) => void
+  defaultQuery?: string
+}>()
+
+const query = ref(props.defaultQuery)
+
+function formSubmit(e: any) {
+  e.preventDefault()
+
+  query.value && props.submit(query.value)
+}
 </script>
 
 <style lang="scss" scoped>
