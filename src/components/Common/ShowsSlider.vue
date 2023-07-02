@@ -24,7 +24,8 @@
           spaceBetween: 30
         }
       }"
-      class="mySwiper"
+      v-bind="swiperOptions"
+      class="my_swiper"
     >
       <slot />
     </swiper>
@@ -33,6 +34,7 @@
 <script setup lang="ts">
 interface Props {
   title: string
+  swiperOptions: any
 }
 import { Swiper } from 'swiper/vue'
 import 'swiper/css/bundle'
@@ -56,12 +58,12 @@ defineProps<Props>()
     }
   }
 }
-</style>
-<style>
-.swiper {
+.my_swiper {
   width: 100%;
   height: 26rem;
 }
+</style>
+<style>
 .swiper-slide {
   display: flex;
   width: auto;

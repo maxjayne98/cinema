@@ -7,14 +7,20 @@
       @mouseover="mouseEnter"
     >
       <div class="card__covers-container">
-        <img :src="show.image?.medium || show.image?.original" class="cover card__cover--main" />
+        <img
+          :src="show.image?.medium || show.image?.original"
+          class="cover card__cover--main"
+          lazy
+        />
         <img
           :src="show.image?.medium || show.image?.original"
           :class="['cover card__cover--second', { 'card--is-hovered': isHovered }]"
+          lazy
         />
         <img
           :src="show.image?.medium || show.image?.original"
           :class="['cover card__cover--third', { 'card--is-hovered': isHovered }]"
+          lazy
         />
         <transition name="fade">
           <div v-if="isHovered" class="card__info" @mouseover="mouseEnter" @mouseleave="mouseLeave">

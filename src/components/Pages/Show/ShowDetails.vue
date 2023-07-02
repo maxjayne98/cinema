@@ -91,10 +91,12 @@ defineProps<{
   &__genre {
     &-list {
       margin: 1rem 0;
+      display: flex;
     }
     &-badge {
       font-size: 1.6rem;
       padding: 0.5rem 0.5rem;
+      margin: 0 0.4rem;
     }
   }
 

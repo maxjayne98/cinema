@@ -4,6 +4,7 @@
       <img
         class="banners__background"
         src="https://static.tvmaze.com/uploads/images/original_untouched/303/758509.jpg"
+        lazy
       />
     </div>
   </div>

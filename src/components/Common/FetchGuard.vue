@@ -33,6 +33,7 @@ withDefaults(
 
 <style scoped lang="scss">
 .guard {
+  width: 100%;
   &__error {
     font-size: 1.6rem;
     text-align: center;

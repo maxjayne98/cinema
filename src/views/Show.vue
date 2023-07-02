@@ -1,24 +1,31 @@
 <template>
   <div class="show">
-    <section class="main-top" style="margin-top: -75px">
-      <article id="single-30nama" class="main-article" style="padding-top: 75px">
-        <!---->
-        <section class="background">
-          <main class="main-content-single">
-            <div class="gradient" />
-            <img :src="bg?.resolutions['original'].url" :alt="info?.name" class="img loaded" />
-          </main>
-        </section>
-        <figure>
-          <figcaption>
-            <main class="main-content">
-              <section class="figcaption-content">
-                <ShowDetails :show="info" />
-              </section>
+    <section class="main-top">
+      <Guard :error="error">
+        <article id="single-30nama" class="main-article">
+          <!---->
+          <section class="background">
+            <main class="main-content-single">
+              <div class="gradient" />
+              <img
+                :src="bg?.resolutions['original'].url"
+                :alt="info?.name"
+                class="img loaded"
+                lazy
+              />
             </main>
-          </figcaption>
-        </figure>
-      </article>
+          </section>
+          <figure>
+            <figcaption>
+              <main class="main-content">
+                <section class="figcaption-content">
+                  <ShowDetails v-if="info" :show="info" />
+                </section>
+              </main>
+            </figcaption>
+          </figure>
+        </article>
+      </Guard>
     </section>
   </div>
 </template>
@@ -26,8 +33,10 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
+// import { useRouter } from 'vue-router'
 import { getShowInfo, getShowImages } from '@/services/shows'
 import ShowDetails from '@/components/Pages/Show/ShowDetails.vue'
+import Guard from '@/components/Common/FetchGuard.vue'
 
 import { findResolution } from '@/utils/helpers'
 import type { Show, Image } from '@/models/types'
@@ -35,9 +44,11 @@ import type { Show, Image } from '@/models/types'
 const {
   params: { id }
 } = useRoute()
+// const router = useRouter()
 
 const info = ref<Show | null>(null)
 const bg = ref<Image | null>(null)
+const error = ref<string>('')
 
 onMounted(() => fetchShowInfo())
 
@@ -52,8 +63,11 @@ async function fetchShowInfo() {
         findResolution(images, { height: 1080, width: 1920 }) ||
         findResolution(images, { width: 1280, height: 720 })
       if (img) bg.value = img
-    } catch (error) {
-      console.log('🚀 ~ file: Show.vue:24 ~ fetchShowInfo ~ error:', error)
+    } catch (error: any) {
+      if ('response' in error) {
+        error.value = `${error.response.data.name} ${error.response.data.message} ${error.response.data.status}`
+        console.log('🚀 ~ file: Show.vue:71 ~ fetchShowInfo ~ error.value :', error.value)
+      }
     }
   }
 }
@@ -62,6 +76,10 @@ async function fetchShowInfo() {
 <style lang="scss" scoped>
 .show {
   color: white;
+}
+
+.guard {
+  min-height: 30rem;
 }
 .main-top {
   display: -webkit-box;
