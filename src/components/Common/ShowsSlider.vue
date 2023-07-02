@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="slider">
     <p class="slider__title">
       {{ title }}
       <slot name="titleIcon" />
@@ -45,6 +45,10 @@ defineProps<Props>()
 </script>
 <style scoped lang="scss">
 .slider {
+  margin-top: 3.2rem;
+  &:first-child {
+    margin-top: 0;
+  }
   &__title {
     font-size: 1.8rem;
     font-weight: 600;
@@ -60,7 +64,6 @@ defineProps<Props>()
 }
 .my_swiper {
   width: 100%;
-  height: 32rem;
 }
 </style>
 <style>
@@ -71,6 +74,10 @@ defineProps<Props>()
 .swiper-button-next.swiper-button-disabled,
 .swiper-button-prev.swiper-button-disabled {
   opacity: 0;
+}
+.swiper-wrapper {
+  display: flex;
+  align-items: end;
 }
 
 .swiper-button-next,

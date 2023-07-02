@@ -1,6 +1,20 @@
 <template>
   <div>
-    <Banners />
+    <Banners :banners="banners.filter(Boolean)">
+      <template #default="{ show }">
+        <div class="banner__details">
+          <RouterLink :to="{ name: 'shows-id', params: { id: show.id } }" class="card__covers">
+            <p class="banner__details__name">
+              {{ extractTextFromHtmlNode(show?.name) }}
+              {{ show.premiered?.split('-')[0] }}
+            </p>
+            <p class="banner__details__summary">
+              {{ extractTextFromHtmlNode(show?.summary) }}
+            </p>
+          </RouterLink>
+        </div>
+      </template>
+    </Banners>
     <PageContainer>
       <section class="section">
         <div>
@@ -20,6 +34,7 @@
 <script setup lang="ts">
 import { onMounted, ref, computed } from 'vue'
 import { SwiperSlide } from 'swiper/vue'
+import { RouterLink } from 'vue-router'
 import MovieCard from '@/components/Common/MovieCard.vue'
 import ShowsSlider from '@/components/Common/ShowsSlider.vue'
 import PageContainer from '@/components/Common/PageContainer.vue'
@@ -27,6 +42,7 @@ import Banners from '@/components/Pages/Home/Banners.vue'
 import FetchGuard from '@/components/Common/FetchGuard.vue'
 import { getShowsByPage } from '@/services/shows'
 import type { Show } from '@/models/types'
+import { extractTextFromHtmlNode } from '@/utils/helpers'
 
 const TOP_GENRE_SIZE = 10
 const shows = ref<Array<Show>>([])
@@ -58,6 +74,12 @@ const topGenresShows = computed(() => {
   )
 })
 
+const banners = computed(() => {
+  return (Object.values(topGenresShows.value) as Array<Show>).map(
+    (show) => show[0].image.original && { cover: show[0].image.original, show: show[0] }
+  )
+})
+
 function getShowGenreIndex(show: Show) {
   return show['genres'][0]
 }
@@ -81,7 +103,7 @@ async function fetchShows() {
 onMounted(() => fetchShows())
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .container {
   display: flex;
   flex-wrap: wrap;
@@ -98,5 +120,29 @@ onMounted(() => fetchShows())
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+.banner__details {
+  position: absolute;
+  left: 3rem;
+  z-index: 999;
+  bottom: 18rem;
+  color: white;
+  filter: drop-shadow(0 1px 2px rgb(0 0 0 / 0.1)) drop-shadow(0 1px 1px rgb(0 0 0 / 0.16));
+  &__name {
+    font-size: 4.8rem;
+    font-weight: 700;
+    width: 80vw;
+  }
+  &__summary {
+    font-size: 2.4rem;
+    width: 50%;
+    width: 60vw;
+    text-align: left;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 </style>

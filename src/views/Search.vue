@@ -1,7 +1,12 @@
 <template>
   <div class="search">
     <section class="search__first-section">
-      <Banners />
+      <Banners
+        :banners="[
+          { cover: 'https://static.tvmaze.com/uploads/images/original_untouched/226/566476.jpg' }
+        ]"
+        :interval="false"
+      />
       <div class="search__input-container">
         <SearchInput :submit="searchShows" :default-query="(query as string)" />
       </div>

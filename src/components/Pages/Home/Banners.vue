@@ -1,19 +1,44 @@
 <template>
   <div class="banners">
     <div class="banners__background-container">
-      <img
-        class="banners__background"
-        src="https://static.tvmaze.com/uploads/images/original_untouched/303/758509.jpg"
-        lazy
-      />
+      <template v-for="({ cover, show }, index) in banners" :key="`${cover}_${index}`">
+        <transition name="fade">
+          <img v-if="currentBannerIndex === index" class="banners__background" :src="cover" lazy />
+        </transition>
+        <transition name="fade">
+          <slot v-if="currentBannerIndex === index" :show="show" />
+        </transition>
+      </template>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-defineProps<{
-  bannersUrl?: Array<string>
-}>()
+import { Show } from '@/models/types'
+import { onBeforeMount, onMounted, ref } from 'vue'
+
+const props = withDefaults(
+  defineProps<{
+    banners?: Array<{ cover: string; show?: Show }>
+    interval: boolean
+  }>(),
+  { interval: true, banners: undefined }
+)
+const currentBannerIndex = ref(0)
+const intervalTimer = ref<any>(null)
+
+onMounted(() => {
+  if (props.interval) {
+    intervalTimer.value = setInterval(() => {
+      if (currentBannerIndex.value + 1 === props.banners?.length) currentBannerIndex.value = 0
+      else currentBannerIndex.value += 1
+    }, 4000)
+  }
+})
+
+onBeforeMount(() => {
+  clearInterval(intervalTimer.value)
+})
 </script>
 
 <style lang="scss" scoped>
@@ -80,5 +105,13 @@ defineProps<{
     object-fit: cover;
     transition: all 1s;
   }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 1s;
+}
+.fade-enter-from, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>
