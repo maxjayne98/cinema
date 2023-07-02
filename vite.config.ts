@@ -25,5 +25,6 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
-  base: '/cinema'
+  base: '/cinema',
+  server: { port: 3000 }
 })
