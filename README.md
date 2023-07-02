@@ -35,7 +35,7 @@
 	 The shared service that will be called in our pages, composables. in our project we just put the network requests functionality.
 	     
  -  utils
-	 The shared functionality, modules (like HTTP client ), configs, and constant variables come in this folder. in this way, we prevent inconsistency of calculation and configs in our application.
+	 The shared functionality, modules (like HTTP client), configs, and constant variables come in this folder. in this way, we prevent inconsistency of calculation and configs in our application.
 
 ## Dependecies
 

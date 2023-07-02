@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import Loading from '@/components/Common/Loading.vue'
+import Loading from '@/components/Base/Loading.vue'
 withDefaults(
   defineProps<{
     error?: string | undefined | null
