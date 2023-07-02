@@ -131,6 +131,9 @@ function searchButtonOnClick() {
     background-color: transparent;
     position: absolute;
     left: -0.4rem;
+    min-width: 18rem;
+    max-width: 30rem;
+    width: 80%;
     &-container {
       display: flex;
       align-items: center;

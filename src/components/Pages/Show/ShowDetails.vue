@@ -9,7 +9,7 @@
           {{ show?.network?.name }}
         </a>
       </li>
-      <li class="show-details__time">{{ show?.runtime }}m</li>
+      <li v-if="show?.runtime" class="show-details__time">{{ show?.runtime }}m</li>
     </ul>
     <ul class="show-details__genre-list">
       <li v-for="genre in show?.genres" :key="genre" class="show-details__genre">

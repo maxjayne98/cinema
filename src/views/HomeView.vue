@@ -4,11 +4,13 @@
     <PageContainer>
       <section class="section">
         <div>
-          <ShowsSlider v-for="(value, key) in topGenresShows" :key="key" :title="key">
-            <SwiperSlide v-for="show in (value as Array<Show>).slice(0, 10)" :key="show.id">
-              <MovieCard :show="show" />
-            </SwiperSlide>
-          </ShowsSlider>
+          <FetchGuard :is-loading="!shows.length" :error="error">
+            <ShowsSlider v-for="(value, key) in topGenresShows" :key="key" :title="key">
+              <SwiperSlide v-for="show in (value as Array<Show>).slice(0, 10)" :key="show.id">
+                <MovieCard :show="show" />
+              </SwiperSlide>
+            </ShowsSlider>
+          </FetchGuard>
         </div>
       </section>
     </PageContainer>
@@ -22,11 +24,13 @@ import MovieCard from '@/components/Common/MovieCard.vue'
 import ShowsSlider from '@/components/Common/ShowsSlider.vue'
 import PageContainer from '@/components/Common/PageContainer.vue'
 import Banners from '@/components/Pages/Home/Banners.vue'
+import FetchGuard from '@/components/Common/FetchGuard.vue'
 import { getShowsByPage } from '@/services/shows'
 import type { Show } from '@/models/types'
 
 const TOP_GENRE_SIZE = 10
 const shows = ref<Array<Show>>([])
+const error = ref<string | null>(null)
 
 const categorizedShows = computed(() => {
   return shows.value?.reduce((acc, current) => {
@@ -63,8 +67,14 @@ async function fetchShows() {
     const { data } = await getShowsByPage(1)
     const { data: data2 } = await getShowsByPage(2)
     shows.value = [...data, ...data2]
-  } catch (error) {
-    console.log('🚀 ~ file: TheWelcome.vue:17 ~ fetchShows ~ error:', error)
+  } catch (err: any) {
+    if ('response' in err) {
+      if ('data' in err.response && err.response.data) {
+        error.value = `${err.response.data.name} ${err.response.data.message} ${err.response.data.status}`
+      } else {
+        error.value = err.message
+      }
+    }
   }
 }
 

@@ -8,13 +8,13 @@
     </section>
     <section>
       <PageContainer>
-        <Guard>
+        <FetchGuard :is-loading="!shows.length" :error="error">
           <div class="search__list">
             <div v-for="{ show } in shows" :key="show.id" class="search__list-item">
               <MovieCard :show="show" />
             </div>
           </div>
-        </Guard>
+        </FetchGuard>
       </PageContainer>
     </section>
   </div>
@@ -26,19 +26,25 @@ import Banners from '@/components/Pages/Home/Banners.vue'
 import SearchInput from '@/components/Pages/Search/SearchInput.vue'
 import PageContainer from '@/components/Common/PageContainer.vue'
 import MovieCard from '@/components/Common/MovieCard.vue'
-import Guard from '@/components/Common/FetchGuard.vue'
+import FetchGuard from '@/components/Common/FetchGuard.vue'
 import type { Show } from '@/models/types'
 
 import { getShowsByQuery } from '@/services/shows'
 const shows = ref<Array<{ score: number; show: Show }>>([])
+const error = ref<string | null>('')
 
 async function searchShows() {
   try {
     const { data } = await getShowsByQuery('man')
     shows.value = data
-    console.log('🚀 ~ file: Search.vue:16 ~ searchShows ~ response:', data)
-  } catch (error) {
-    console.log('🚀 ~ file: Search.vue:33 ~ searchShows ~ error:', error)
+  } catch (err: any) {
+    if ('response' in err) {
+      if ('data' in err.response && err.response.data) {
+        error.value = `${err.response.data.name} ${err.response.data.message} ${err.response.data.status}`
+      } else {
+        error.value = err.message
+      }
+    }
   }
 }
 
