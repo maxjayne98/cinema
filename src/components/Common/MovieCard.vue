@@ -9,17 +9,17 @@
       <div class="card__covers-container">
         <img
           :src="show.image?.medium || show.image?.original"
-          class="cover card__cover--main"
+          class="card__cover card__cover--main"
           lazy
         />
         <img
           :src="show.image?.medium || show.image?.original"
-          :class="['cover card__cover--second', { 'card--is-hovered': isHovered }]"
+          :class="['card__cover card__cover--second', { 'card--is-hovered': isHovered }]"
           lazy
         />
         <img
           :src="show.image?.medium || show.image?.original"
-          :class="['cover card__cover--third', { 'card--is-hovered': isHovered }]"
+          :class="['card__cover card__cover--third', { 'card--is-hovered': isHovered }]"
           lazy
         />
         <transition name="fade">
@@ -27,8 +27,8 @@
             <p class="card__info-text">
               {{ extractTextFromHtmlNode(show.summary) }}
             </p>
-            <ul class="card-info__genres">
-              <li v-for="genre in show.genres.slice(0, 3)" :key="genre" class="card-info__genre">
+            <ul class="card__genres">
+              <li v-for="genre in show.genres.slice(0, 3)" :key="genre" class="card__genre">
                 {{ genre }}
               </li>
             </ul>
@@ -73,132 +73,130 @@ function mouseLeave() {
 </script>
 
 <style lang="scss" scoped>
-.card__badge {
-  background-color: var(--scrollbar-front);
-  color: white;
-  margin: 0 0.5rem;
-  text-align: center;
-  padding: 0.25rem;
-}
-
-.card__badge--top {
-  border-top-left-radius: 0.5rem;
-  border-top-right-radius: 0.5rem;
-  font-weight: 600;
-}
-
-.card__badge--bottom {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom-left-radius: 0.5rem;
-  border-bottom-right-radius: 0.5rem;
-  z-index: 5;
-  padding: 0.4rem 0.8rem;
-  font-size: 1.2rem;
-}
-
-.cover {
-  height: 20rem;
-  width: 100%;
-  box-shadow: var(--shadow);
-  border-radius: 0.5rem;
-}
-
 .card {
   margin: 1rem;
   display: flex;
   align-items: end;
   font-size: 0.875rem;
-}
-.card__badge__icon {
-  width: 2rem;
-  height: 2rem;
-  border-radius: 50%;
-  margin-right: 0.4rem;
-  display: inline;
-}
-.card__cover--main {
-  z-index: 3;
-  position: relative;
-}
 
-.card__cover--second {
-  z-index: 2;
-  top: 0.25rem;
-  right: -0.25rem;
-  position: absolute;
-  transition: 200ms ease-in all;
-}
+  &__cover {
+    height: 20rem;
+    width: 100%;
+    box-shadow: var(--shadow);
+    border-radius: 0.5rem;
+  }
 
-.card__cover--third {
-  z-index: 1;
-  top: 0.5rem;
-  right: -0.5rem;
-  position: absolute;
-  transition: 180ms ease-in all;
-}
+  &__badge {
+    background-color: var(--scrollbar-front);
+    color: white;
+    margin: 0 0.5rem;
+    text-align: center;
+    padding: 0.25rem;
 
-.card--is-hovered {
-  top: 0;
-  right: 0;
-}
+    &--top {
+      border-top-left-radius: 0.5rem;
+      border-top-right-radius: 0.5rem;
+      font-weight: 600;
+    }
 
-.card__container {
-  padding: 1rem;
-  width: 18rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: end;
-}
+    &--bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom-left-radius: 0.5rem;
+      border-bottom-right-radius: 0.5rem;
+      z-index: 5;
+      padding: 0.4rem 0.8rem;
+      font-size: 1.2rem;
+    }
 
-.card__covers {
-  position: relative;
-}
+    &__icon {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      margin-right: 0.4rem;
+      display: inline;
+    }
+  }
+  &__cover {
+    &--main {
+      z-index: 3;
+      position: relative;
+    }
 
-.card__covers-container {
-  position: relative;
-  cursor: pointer;
-  border-radius: 0.5rem;
-}
+    &--second {
+      z-index: 2;
+      top: 0.25rem;
+      right: -0.25rem;
+      position: absolute;
+      transition: 200ms ease-in all;
+    }
 
-.container {
-  display: flex;
-  flex-wrap: wrap;
-}
+    &--third {
+      z-index: 1;
+      top: 0.5rem;
+      right: -0.5rem;
+      position: absolute;
+      transition: 180ms ease-in all;
+    }
+  }
 
-.card__info {
-  background-color: rgba(0, 0, 0, 0.65);
-  position: absolute;
-  inset: 0;
-  color: white;
-  z-index: 6;
-  padding: 0.75rem;
-  border-radius: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-.card__info-text {
-  text-align: center;
-  -webkit-line-clamp: 5;
-  -webkit-box-orient: vertical;
-  display: -webkit-box;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+  &--is-hovered {
+    top: 0;
+    right: 0;
+  }
 
-.card-info__genres {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  list-style-type: disc;
-  font-size: 1rem;
-  margin: 0rem 0.5rem;
-}
+  &__container {
+    padding: 1rem;
+    width: 18rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+  }
 
-.card-info__genre {
-  margin: 0 0.5rem;
+  &__covers {
+    position: relative;
+    &-container {
+      position: relative;
+      cursor: pointer;
+      border-radius: 0.5rem;
+    }
+  }
+
+  &__info {
+    background-color: rgba(0, 0, 0, 0.65);
+    position: absolute;
+    inset: 0;
+    color: white;
+    z-index: 6;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    &-text {
+      text-align: center;
+      -webkit-line-clamp: 5;
+      -webkit-box-orient: vertical;
+      display: -webkit-box;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  &__genres {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    list-style-type: disc;
+    font-size: 1rem;
+    margin: 0rem 0.5rem;
+  }
+
+  &__genre {
+    margin: 0 0.5rem;
+  }
 }
 
 .fade-enter-active,
@@ -214,7 +212,7 @@ function mouseLeave() {
   .card__container {
     width: 14rem;
   }
-  .cover {
+  .card__cover {
     height: 17rem;
   }
   .card__badge--top {
