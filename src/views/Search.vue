@@ -11,7 +11,11 @@
         <FetchGuard :is-loading="isLoading" :error="error">
           <template v-if="Array.isArray(shows)">
             <div v-if="shows?.length" class="search__list">
-              <div v-for="{ show } in shows" :key="show.id" class="search__list-item">
+              <div
+                v-for="{ show } in shows.slice(0, page * PAGE_SIZE)"
+                :key="show.id"
+                class="search__list-item"
+              >
                 <MovieCard :show="show" />
               </div>
             </div>
@@ -19,6 +23,7 @@
           </template>
           <NoData v-else message="Please search." />
         </FetchGuard>
+        <div ref="root" />
       </PageContainer>
     </section>
   </div>
@@ -34,7 +39,9 @@ import MovieCard from '@/components/Common/MovieCard.vue'
 import FetchGuard from '@/components/Common/FetchGuard.vue'
 import NoData from '@/components/Common/NoData.vue'
 import { getShowsByQuery } from '@/services/shows'
+import useIndefiniteScroll from '@/composables/useIndefiniteScroll'
 import type { Show } from '@/models/types'
+const PAGE_SIZE = 20
 
 const route = useRoute()
 
@@ -42,12 +49,21 @@ const shows = ref<Array<{ score: number; show: Show }> | null>(null)
 const error = ref<string>('')
 const isLoading = ref(false)
 const query = ref(route.query.q || '')
+const root = ref(null)
+const page = ref(1)
+
+useIndefiniteScroll(updatePage, root, { rootMargin: '40px', threshold: 0.1 })
+
+function updatePage() {
+  page.value += 1
+}
 
 async function searchShows(query: string) {
   isLoading.value = true
+  page.value = 1
   try {
     const { data } = await getShowsByQuery(query)
-    shows.value = data
+    shows.value = Array(10).fill(data).flat()
   } catch (err: any) {
     if ('response' in err) {
       if ('data' in err.response && err.response.data) {
