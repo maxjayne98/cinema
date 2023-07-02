@@ -34,7 +34,7 @@
 <script setup lang="ts">
 interface Props {
   title: string
-  swiperOptions: any
+  swiperOptions?: any
 }
 import { Swiper } from 'swiper/vue'
 import 'swiper/css/bundle'

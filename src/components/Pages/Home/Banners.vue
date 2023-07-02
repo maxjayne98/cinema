@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { Show } from '@/models/types'
+import type { Show } from '@/models/types'
 import { onBeforeMount, onMounted, ref } from 'vue'
 
 const props = withDefaults(

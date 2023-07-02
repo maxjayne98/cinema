@@ -5,11 +5,11 @@
         <div class="banner__details">
           <RouterLink :to="{ name: 'shows-id', params: { id: show.id } }" class="card__covers">
             <p class="banner__details__name">
-              {{ extractTextFromHtmlNode(show?.name) }}
+              {{ extractTextFromHtmlNode(show?.name || '') }}
               {{ show.premiered?.split('-')[0] }}
             </p>
             <p class="banner__details__summary">
-              {{ extractTextFromHtmlNode(show?.summary) }}
+              {{ extractTextFromHtmlNode(show?.summary || '') }}
             </p>
           </RouterLink>
         </div>
@@ -75,7 +75,7 @@ const topGenresShows = computed(() => {
 })
 
 const banners = computed(() => {
-  return (Object.values(topGenresShows.value) as Array<Show>).map(
+  return (Object.values(topGenresShows.value) as Array<Array<Show>>).map(
     (show) => show[0].image.original && { cover: show[0].image.original, show: show[0] }
   )
 })

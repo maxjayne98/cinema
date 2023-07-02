@@ -8,9 +8,12 @@
 </template>
 
 <script setup lang="ts">
-defineProps({
-  message: String
-})
+withDefaults(
+  defineProps<{
+    message: string
+  }>(),
+  { message: '' }
+)
 </script>
 
 <style scoped>

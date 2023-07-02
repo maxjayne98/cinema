@@ -19,7 +19,7 @@
 import Loading from '@/components/Common/Loading.vue'
 withDefaults(
   defineProps<{
-    error?: string
+    error?: string | undefined | null
     isLoading?: boolean
     retry?: () => void
   }>(),
