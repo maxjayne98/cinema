@@ -4,12 +4,14 @@
       <CinemaLogo class="header__logo" />
     </RouterLink>
     <transition name="slide-left-in">
-      <div v-if="route.name !== 'search'" class="header__input-container">
-        <MagnifyingGlassIcon class="header__input__icon" @click="searchButtonOnClick" />
+      <form v-if="route.name !== 'search'" class="header__input-container" @submit="searchOnSubmit">
+        <button type="submit">
+          <MagnifyingGlassIcon class="header__input__icon" />
+        </button>
         <transition name="slide-left-in">
           <input v-if="isSearchInputVisible" v-model="query" class="header__input" />
         </transition>
-      </div>
+      </form>
     </transition>
   </header>
 </template>
@@ -34,7 +36,8 @@ window.addEventListener('scroll', function () {
   }
 })
 
-function searchButtonOnClick() {
+function searchOnSubmit(event: any) {
+  event.preventDefault()
   if (isSearchInputVisible.value && query.value) {
     router.push({ name: 'search', query: { q: query.value } })
     query.value = ''
