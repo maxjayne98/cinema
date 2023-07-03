@@ -10,20 +10,25 @@
 </template>
 
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
+
 import { MagnifyingGlassIcon } from '@heroicons/vue/24/solid'
 import { ref } from 'vue'
-
 const props = defineProps<{
   submit: (query: string) => void
   defaultQuery?: string
 }>()
 
+const router = useRouter()
 const query = ref(props.defaultQuery)
 
 function formSubmit(e: any) {
   e.preventDefault()
 
-  query.value && props.submit(query.value)
+  if (query.value) {
+    router.replace({ query: { q: query.value } })
+    props.submit(query.value)
+  }
 }
 </script>
 

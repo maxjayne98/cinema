@@ -82,7 +82,11 @@ async function searchShows(query: string) {
   }
 }
 
-onMounted(() => query.value && searchShows(query.value as string))
+onMounted(() => {
+  if (query.value) {
+    searchShows(query.value as string)
+  }
+})
 </script>
 
 <style lang="scss" scoped>
